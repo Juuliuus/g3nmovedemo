@@ -1,0 +1,347 @@
+instruction for g3nmovedemo
+June 2022
+program written using g3n v0.2.0
+=====================================
+
+This 3D movement demo has a lot of keystrokes to demonstrate various
+types of movement so its a good idea to follow this script until you
+get acquainted with it.
+
+The code uses the golang g3n game engine. If you run/build this it
+will pull the g3n engine v0.2.0 in if you don't already have it. And
+ensure your computer meets the g3n requirements.
+
+see https://github.com/g3n/engine
+
+I work in GNU-Linux, if I've messed something up such that it won't
+compile in Wind(bl)ows, somebody will need to tell me.
+
+When you open the demo you will have a large and small sphere, a green
+GOpher and a blue GOpher.
+
+The green gopher will be the steer-able character, the blue gopher
+serves as an indicator and demonstrates "LookAt"'s, both smooth and
+immediate.
+
+First things first:
+F Fullscreen
+Q Quit
+B Stops rotations at any time
+S Stops all motion
+T Toggles motion on/off
+0,O,numpad0  Reset the scene
+
+You can also use the mouse to change camera orientation if you
+want. Left mouse rotates it, right mouse moves it. Or use the
+left/right and up/down arrow keys.
+
+
+
+
+For the fist demo, smooth "buffered" motion, you will need to be
+quick! It will move the small sphere back and forth quickly. So,
+remember:
+S Stop (S can always be used for stopping all movements)
+0 Resets the scene at any time
+
+Now try these keys:
+D move sphere left
+E move sphere right
+
+
+The L key demonstrates smooth quaternion slerp'd motion. Each press of
+L key will have the blue gopher LootAt the small sphere, the large
+sphere, and then whatever the current steer-able object is (either the
+green gopher or the camera), in turn. Try it.
+
+Ctrl-L also LookAt's but with immediate "snap" mode.
+
+
+There are two modes in this demo, a simple translation/rotation mode
+and a steer-able "flying" mode. The game starts in translation mode by
+default. 
+
+===========
+TRANSLATION MODE
+===========
+
+Now press X to move the green gopher in the positive X direction. Each press
+of X increases its speed.
+
+Ctrl-X decreases the speed in the same steps, and when the speed
+passes through zero then continues to move the object in the negative X
+direction.
+
+
+Now press 0 to reset. Then press X. Let it move a bit.
+
+Then press N.
+
+N switches the object back and forth between the green gopher and the
+camera. This works in all modes. If the camera is the moveable object
+an indicator "prow" is shown, if the gopher is the moveable object the
+camera view is clean.
+
+While you switch between them with N, use L too. The blue Gopher will
+look at whoever is moving every third time.
+
+
+Now press 0 to reset. Then press Shift-Y once or twice. This rotates
+the current mover around the Y axis. Shift-Ctrl-Y decrements the
+rotation.
+
+The messages demonstrate game "backstabbing", that is where an object
+is behind another in some specified angle and can then shoot them in
+the back.
+
+From here on I may use the convention of X, CX, SX, SCX for X,
+ctrl-X, shift-X, and shift-ctrl X, and similar.
+
+
+The basic keys here in translation mode:
+
+X, Y, Z  increments movement on those axes.
+CX, CY, CZ  decrements movement on those axes.
+
+SX, SY, SZ  increments rotation on those axes.
+SCX, SCY, SCZ  decrements rotation on those axes.
+
+W simulates acceleration, each press doubles any motion velocities
+
+All the keys can be used repeatedly to combine the velocities.
+
+
+So now try this:
+First press 0 to reset. Then SX, SY, SZ, then X a couple times. Then W
+about 4 times.
+
+Now press N.
+
+At times it becomes easy to get lost, or to lose control!
+
+Use B to stop rotations, or S to stop all motions, or 0 to stop
+and reset.
+
+So now play with translations, then we go to flying...
+
+
+
+===========
+FLYING MODE
+===========
+
+You change modes using M. When you do this you will notice the wind up
+key on blue gopher is rotating. This is your indication of which mode
+you are in, it doesn't rotate in translate mode.
+
+First a demo of a method called "approaching". An approach buffers the
+changes in motion to make them smoothly transition to a particular
+goal and prevents jerky motion.
+
+Press A. Let it spin up. Then Ctrl-A. Or press Ctrl-A twice to slow
+and reverse the spin.
+
+Like butter.
+
+Flying is basically always moving in same or opposite direction of
+your face. A properly oriented mesh comes into the game facing in the
+positive Z axis.
+
+So in flying mode use Z and Ctrl-Z to move forward/backward.
+
+In flying rotations have particular names. Here are the keys to use to
+steer the object, the axes refer to the local axes on the object:
+
+P (Pitch, up/down motion, rotation on X axis) 
+Y (Yaw, right/left motion, rotation about the Y axis)
+R (Roll, rolling motion, rotation about the Z axis)
+
+Use Ctrl key with the above keys to decrement those rotations.
+
+
+Press 0 to reset, then Z. Then Y, wait a bit, then Ctrl-Y.
+
+Green gopher always faces the direction you move and turn her. You are
+flying, or steering, green gopher.
+
+Press Z a couple times, then press N to change to camera node. You are
+now flying!
+
+Play around. If you are getting confused don't forget that the B key
+stops all rotations, and that S stops all motion.
+
+Press 0 to reset. Then try the P key to control pitch.
+
+Press 0 to reset. Then try the R key to control roll.
+
+Press 0 to reset.
+
+Now pretend green gopher is a space ship. When you boost the rockets
+(Z key) she will take off in the direction she is facing.
+
+But what if you need to maneuver for docking? In flying mode you need
+thrusters to move you left/right and up/down.
+
+Left/Right thrusting is tied to H key (horizontal, X axis), and up/down
+thrusting to the V key (vertical, Y axis).
+
+NOTE: Thrusting is an imperfect portion of the demo, there are some
+positions you can get in that reverse the left/right and up/down. And
+with the camera there is an issue where left/right become up/down and
+vice versa.
+
+I'll be looking into it at some point, but maybe you find it first and
+let me know.
+
+Here are the keys for flying:
+
+Z   forward thrust, Ctrl Z reverse thrust
+
+P / Ctrl P  Pitch up/down
+Y / Ctrl Y  Yaw left/right
+R / Ctrl R  Roll CounterClockwise / Clockwise
+
+A  spin fast on X axis, Ctrl A reverse that spin
+
+W simulates acceleration, each press doubles any motion velocities
+
+H / Ctrl H  Horizontal thrust left/right (usually)
+V / Ctrl V  Veritcal thrust up/down (mostly)
+
+So now use any combination you like, switch gopher and camera with N,
+use L to have blue gopher track you, and so on.
+
+Don't forget B to stop rotations. S to stop all motion. And 0 to
+reset. Or that T toggles motion on/off.
+
+
+===========
+NOTES
+===========
+
+IMPORTANT: mesh orientation
+------------------------------
+If you want backstabbing to work and for translations to be along the
+natural and expected axes, then you want to pay attention to the mesh
+you import.
+
+I had started off with the gopher mesh from gokoban. And I cannot tell
+you how crazy things were until I realized a couple things about that
+mesh.
+
+<all references to axes are from Blender, the only modeling program I
+know how to use>
+
+It was designed with the gopher looking down the X axis. In addition,
+the origin was at the left foot, and...more.
+
+The mesh's "face" needs to be looking down the negative Y axis (this
+becomes the Z axis in g3n, while the blender Z axis becomes the g3n Y
+axis). When adding a mesh, for example a default cube, it is in the
+correct orientation immediately as long as you use the cube side that
+is forward and left, on the Y axis.
+
+Other problems that needed to be fixed were individual sub object
+origins were all over the place, and correct parenting.
+
+If you have trouble with an imported mesh, open it in a mesh editor
+and make sure it is clean and the face pointed in the right direction.
+------------------------------
+
+The motions in this demo are "inertia" based. That is, once you start
+moving in a direction, or rotating, it will continue that motion until
+you counter that motion. If you would prefer "fly-by-wire" simply
+modify the code such that rotations are only made while a key is down,
+then in a key release func just set that rotation back to zero.
+
+===
+
+What I didn't know (or realize)...
+
+Basic thinking about objects: All objects in a scene have a
+position vector. Yes, you can move all the objects simply by changing
+the elements in the vector. But you will not be a happy camper and/or
+the movements will be jerky and hard to control.
+
+If you want to an object to move you use another vector to do it: a
+velocity vector.
+
+You manipulate the velocity vector in any way you like then apply it
+to the object's position vector with using "vector addition". And you
+will do this piecemeal in a render loop using deltatimes and you will
+be happy and smiley, because you will have smooth motion that you can
+control with precision. This was something I did not realize/know
+until I started looking into game developer math.
+
+The upshot of this homily, is that, like it or not, you =WILL= have to
+become at least acquainted with vectors and vector math, etc. If you
+don't then it is unlikely that you will ever be able to figure
+anything out. Vector math, for example, is really un-intuitive.
+
+This project has taught me that. Getting thrusting in flying took me
+days to figure out...but I literally did figure it out by applying the
+trigonometric logic I had seen in a youtube video.
+
+So a word to the uninitiated...vectors are your friends!
+
+===
+
+This program came about from a discussion in the help section of the
+g3n discord. A question was asked if there were any examples of how to
+move things around in g3n, and I seconded the question. No answer came
+so I looked up some videos so as to learn the basics of game movement.
+
+I found the following series of math for game developers which helped
+me understand how to think about vectors, matrices, and quaternions:
+
+https://www.youtube.com/watch?v=sKCF8A3XGxQ&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My
+
+Then the task was to test and play. So you see I am not new to
+programming, but I am new to game manipulation. It is quite possible
+that the there are better ways to do some these things. Super. If
+someone sees something that can be improved, let us know.
+
+Anyway, so once I had worked through the (many) difficulties of
+wrapping my head around this stuff, I wrote this to share with other
+newbie game devs.
+
+The code is imperfect and not highly polished, but it works (though
+thrusting / strafing in flying mode are a bit wonky sometimes). Even
+so it is at least a jumping off place for someone that is coming into
+g3n and game dev cold.
+
+===
+
+I'm interested in space games so I went totally 3D, fly anywhere.
+
+If you are more a 2D game dev then just remove the Y axis stuff, or
+change it to be the jumping "force of gravity".
+
+===
+
+While I mention above the importance of the orientation of the
+imported mesh, there is one issue.
+
+It is true that it is important for that orientation to be
+kept. Otherwise backstabbing (ie., the calculation of vector dot
+products) will be incorrect.
+
+However, there is an issue with the LookAt() function in this
+orientation. If you call the object's LookAt it will look in the
+opposite direction! I believe it is tied to the camera's LookAt()
+(which works fine) but takes into account the camera's orientation
+which is looking along the NEGATIVE Z axis, while the object is
+looking along the POSITIVE Z axis.
+
+So, One way to fix this is to have the mesh looking in the positive Y
+direction in blender, but, as I said, then dot products don't work and
+backstabbing is wacky, as well as any translation along the Z axis
+becomes reversed.
+
+So when calling an object's LookAt I massage the vector such that
+LookAt works properly (see the code). 
+
+===
+
+Maybe keep the unit around as a movement lab, it may be a good place
+to try crazy things before you put them in your production code.
