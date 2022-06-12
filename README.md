@@ -29,19 +29,16 @@ dependencies as the engine. See those dependencies at the link above.
 # Installation
 
 In order to run, build, and or install you will need Go installed on
-your system. Search for "golang download", the process is quite simple.
+your system. Search for "golang download**, the process is quite
+simple.
 
-Choose or create a folder to run from on your computer. Then change to
-that directory.
+Either clone/fork this repo to a folder of your choice, or, from the
+code button on this page, select to download a zip file, unzip that in
+a the folder of your choise.
 
-You can either use the following command to download the program:
-`go get github.com/Juuliuus/g3nmovedemo`
+From that folder use either "go run ." to run a temporary copy, or "go
+build ." to build an executable in that folder.
 
-Or from the code button on this page select to download a zip file,
-unzip that in your folder.
-
-Then use either "go run ." in that folder to run a temporary copy, or
-"go build ." to build an executable in that folder.
 
 When you do either of these Go will download the g3n engine and
 anything it depends on, if you don't already have it on your system. 
@@ -49,12 +46,13 @@ anything it depends on, if you don't already have it on your system.
 The first run or build will take a little longer while the g3n engine
 has to compile a small binary.
 
+
 Be sure to have a copy of the instructions.txt file open so you can
 walk through the available commands and features.
 
 # Regarding the gopher model
 
-Gopher model was derived from the same model used in gokoban, which
+Gopher model was derived from the same model used in [gokoban](https://github.com/danaugrs/gokoban), which
 gives the following link: Gopher 3D model from:
 
 https://github.com/StickmanVentures/go-gopher-model

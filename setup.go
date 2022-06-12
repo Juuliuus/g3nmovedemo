@@ -248,7 +248,6 @@ func (mg *moveGopher) Initialize(gm *GameApp) {
 
 // check that the data directory exists
 func (gm *GameApp) checkDirData(dirDataName string) string {
-
 	if _, err := os.Stat(dirDataName); err != nil {
 		panic(err)
 	}
