@@ -103,13 +103,14 @@ var (
 
 //save some garbage collection
 var (
-	usePos       math32.Vector3
-	flDifference = float32(0.0)
-	vecUpHat     = math32.NewVector3(0, 1, 0)
+	usePos              math32.Vector3
+	flDifference, dtime = float32(0.0), float32(0.0)
+	vecUpHat            = math32.NewVector3(0, 1, 0)
 	//didn't use
 	//vecRightHat                        = math32.NewVector3(1, 0, 0)
 	//vecScreenHat                       = math32.NewVector3(0, 0, 1)
 	incRot, incLinear, incAcceleration = float32(0.0), float32(0.0), float32(2)
+	vecT1, vecT2, vecI, vec1, vec2     math32.Vector3
 )
 
 //"constant" vars

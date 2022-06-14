@@ -5,6 +5,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/g3n/engine/gls"
@@ -32,7 +33,7 @@ func main() {
 // Game's render loop
 func (gm *GameApp) Update(rend *renderer.Renderer, deltaTime time.Duration) {
 
-	dtime := float32(deltaTime.Seconds())
+	dtime = float32(deltaTime.Seconds())
 
 	gm.Gls().Clear(gls.COLOR_BUFFER_BIT | gls.DEPTH_BUFFER_BIT | gls.STENCIL_BUFFER_BIT)
 
@@ -382,7 +383,6 @@ func (mg *moveGopher) quatSlerp(cnt float32, from, to *math32.Quaternion) {
 
 //a not beautiful, quick/dirty info message
 func (t *moveGopher) getCurrentInfo() string {
-	var vecT1, vecT2, vecI, vec1, vec2 math32.Vector3
 
 	vecT1 = t.sphere1.Position()
 	vecT2 = t.sphere2.Position()
@@ -390,13 +390,14 @@ func (t *moveGopher) getCurrentInfo() string {
 	vec1 = *vecT1.Sub(&vecI)
 	vec2 = *vecT2.Sub(&vecI)
 
+	var sb strings.Builder
+
 	//-----distance compare
-	result := ""
 	//fast comparison
 	if vec1.LengthSq() >= vec2.LengthSq() {
-		result = "big sphere closer\n"
+		sb.WriteString("big sphere closer\n")
 	} else {
-		result = "small sphere closer\n"
+		sb.WriteString("small sphere closer\n")
 	}
 
 	//-----BackStab
@@ -413,17 +414,17 @@ func (t *moveGopher) getCurrentInfo() string {
 	//vecViewForward.Normalize() //don't seem to need this
 
 	if vecViewForward.Dot(&vec1) < -0.8 {
-		result = result + "small sphere backstab!\n"
+		sb.WriteString("small sphere backstab!\n")
 	}
 
 	if vecViewForward.Dot(&vec2) < -0.8 {
-		result = result + "big sphere backstab!\n"
+		sb.WriteString("big sphere backstab!\n")
 	}
 
 	//let's see what magnitude velocity is...
-	result = result + fmt.Sprintf("vel: %v\n", t.vecVelocity.Length())
+	sb.WriteString(fmt.Sprintf("vel: %v\n", t.vecVelocity.Length()))
 
-	return result
+	return sb.String()
 }
 
 //This does an easein/easeout for motion and rotation, use the deltatime and
