@@ -214,7 +214,6 @@ func (mg *moveGopher) onKeyDown(gm *GameApp, kev *window.KeyEvent) {
 			//separate movement routines.
 			if mvType == mvFly {
 				mg.vecMovementGoal.SetZ(mg.vecMovementGoal.Z * -1)
-				gm.Log.Info("yesssss")
 			}
 		default:
 			gm.Camera.Remove(gm.Ship)
